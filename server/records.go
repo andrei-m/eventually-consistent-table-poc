@@ -30,6 +30,10 @@ func (a *AutoDB) NewRandomizedAuto() Auto {
 	return auto
 }
 
+func (a *AutoDB) GetAutos() []Auto {
+	return a.autos
+}
+
 type Sale struct {
 	AutoID   int       `json:"autoId"`
 	Time     time.Time `json:"timestamp"`

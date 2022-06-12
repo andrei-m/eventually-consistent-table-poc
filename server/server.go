@@ -15,6 +15,10 @@ func (s *server) handlePostRandomizedAuto(c *gin.Context) {
 	c.JSON(http.StatusOK, auto)
 }
 
+func (s *server) handleGetAutos(c *gin.Context) {
+	c.JSON(http.StatusOK, s.autoDB.GetAutos())
+}
+
 func GetRouter() *gin.Engine {
 	r := gin.Default()
 	r.SetTrustedProxies([]string{"127.0.0.1"})
@@ -23,6 +27,7 @@ func GetRouter() *gin.Engine {
 	r.GET("/health", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{})
 	})
+	r.GET("/autos", s.handleGetAutos)
 	r.POST("/randomized_auto", s.handlePostRandomizedAuto)
 	return r
 }
