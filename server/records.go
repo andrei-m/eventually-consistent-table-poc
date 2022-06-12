@@ -1,6 +1,7 @@
 package server
 
 import (
+	"math/rand"
 	"sync"
 	"time"
 )
@@ -39,4 +40,23 @@ type Sale struct {
 	Time     time.Time `json:"timestamp"`
 	MsrpUSD  int       `json:"msrpUsd"`
 	PriceUSD int       `json:"priceUsd"`
+}
+
+type SaleDB struct {
+	lock  sync.Mutex
+	sales []Sale
+}
+
+func (s *SaleDB) NewRandomizedSale(autoID int) Sale {
+	s.lock.Lock()
+	defer s.lock.Unlock()
+	sale := Sale{
+		AutoID:   autoID,
+		Time:     time.Now(),
+		MsrpUSD:  rand.Intn(10000),
+		PriceUSD: rand.Intn(10000),
+	}
+	s.sales = append(s.sales, sale)
+	return sale
+
 }
