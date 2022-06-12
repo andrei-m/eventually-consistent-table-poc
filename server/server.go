@@ -33,6 +33,10 @@ func (s *server) handlePostRandomizedSale(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, fmt.Sprintf("autoId must be an integer; got %s", autoIdStr))
 		return
 	}
+	if !s.autoDB.AutoIDExists(autoID) {
+		c.JSON(http.StatusBadRequest, fmt.Sprintf("autoId %d does not exist", autoID))
+		return
+	}
 	sale := s.saleDB.NewRandomizedSale(autoID)
 	c.JSON(http.StatusOK, sale)
 }

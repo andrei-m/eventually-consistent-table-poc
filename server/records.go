@@ -15,8 +15,9 @@ type Auto struct {
 }
 
 type AutoDB struct {
-	lock  sync.Mutex
-	autos []Auto
+	lock    sync.Mutex
+	autos   []Auto
+	autoIDs map[int]struct{}
 }
 
 func (a *AutoDB) NewRandomizedAuto() Auto {
@@ -28,11 +29,23 @@ func (a *AutoDB) NewRandomizedAuto() Auto {
 		ModelName: randStringBytes(8),
 	}
 	a.autos = append(a.autos, auto)
+	if a.autoIDs == nil {
+		a.autoIDs = map[int]struct{}{}
+	}
+	a.autoIDs[auto.ID] = struct{}{}
 	return auto
 }
 
 func (a *AutoDB) GetAutos() []Auto {
 	return a.autos
+}
+
+func (a *AutoDB) AutoIDExists(autoID int) bool {
+	if a.autoIDs == nil {
+		return false
+	}
+	_, ok := a.autoIDs[autoID]
+	return ok
 }
 
 type Sale struct {
