@@ -4,6 +4,19 @@
 
 Good UX for presenting a table sourced from multiple eventually-consistent sources
 
+# Development
+
+```
+go install
+npm install
+
+# Start the backend first
+$GOPATH/bin/eventually-consistent-table-poc
+
+# Start the frontend second
+npm run dev
+```
+
 ## Problem
 
 Complex applications often need to present data stitched together from multiple sources. For example, an application primarily responsible for CRUD operations may evolve to present metrics associated with created entities. Those metrics may be sourced from another system, such as an analytics database. A normal technical design constraint within this architecture is that the two systems in play are not strongly consistent: the analytics database is often 'behind' the entity (aka transactional) database, which puts burden on the downstream application to handle the potential inconsistency gracefully.

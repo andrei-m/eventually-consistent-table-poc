@@ -49,8 +49,8 @@ func GetRouter() *gin.Engine {
 	r.GET("/health", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{})
 	})
-	r.GET("/autos", s.handleGetAutos)
-	r.POST("/randomized_auto", s.handlePostRandomizedAuto)
-	r.POST("/randomized_sale", s.handlePostRandomizedSale)
+	r.GET("/api/autos", s.handleGetAutos)
+	r.POST("/api/randomized_auto", s.handlePostRandomizedAuto)
+	r.POST("/api/randomized_sale", s.handlePostRandomizedSale)
 	return r
 }
